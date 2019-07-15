@@ -8,18 +8,21 @@ var stringifyJSON = function(obj) {
   if (typeof obj === "number" || typeof obj === "boolean") {
     return obj.toString();
   } else if (typeof obj === "string") {
-    return "\"" + obj + "\"";
+    return '"' + obj + '"';
   } else if (obj === null) {
     return "null";
   } else if (obj === undefined) {
     return undefined;
   } else if (Array.isArray(obj) === true) {
-    holder = "[";
-    for (let i = 0; i < obj.length; i++) {
-      holder.push(obj[i]);
+    holder = [];
+    if (obj.length === 0) {
+      return "[]";
+    } else {
+      for (let i = 0; i < obj.length; i++) {
+        holder.push(stringifyJSON(obj[i]));
+      }
+      return "[" + holder.join() + "]";
     }
-    holder.push("]");
-    return holder + stringifyJSON(obj);
   }
 };
 var example = [1, 2, [3], [[4,5]]];
