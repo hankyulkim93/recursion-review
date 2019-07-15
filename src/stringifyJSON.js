@@ -5,25 +5,35 @@
 
 var stringifyJSON = function(obj) {
   var holder;
-  if (typeof obj === "number" || typeof obj === "boolean") {
+  if (typeof obj === 'number' || typeof obj === 'boolean') {
     return obj.toString();
-  } else if (typeof obj === "string") {
-    return '"' + obj + '"';
+  } else if (typeof obj === 'string') {
+    return '\'' + obj + '\'';
   } else if (obj === null) {
-    return "null";
+    return 'null';
   } else if (obj === undefined) {
     return undefined;
   } else if (Array.isArray(obj) === true) {
     holder = [];
     if (obj.length === 0) {
-      return "[]";
+      return '[]';
     } else {
       for (let i = 0; i < obj.length; i++) {
         holder.push(stringifyJSON(obj[i]));
       }
-      return "[" + holder.join() + "]";
+      return '[' + holder.join() + ']';
     }
+  } else if (typeof obj === 'object') {
+    holder = [];
+    for (var key in obj) {
+      if (typeof obj[key] !== 'function' && typeof obj[key] !== undefined) {
+        holder.push('\'' + key + '\':' + stringifyJSON(obj[key]));
+      } else {
+        return '{}';
+      }
+    }
+    return '{' + holder.join() + '}';
   }
 };
-var example = [1, 2, [3], [[4,5]]];
-var example2 = "1, 2, [3], [4,5]";
+var example = [1, 2, [3], [[4, 5]]];
+var example2 = '1, 2, [3], [4, 5]';
