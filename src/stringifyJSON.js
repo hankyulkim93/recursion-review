@@ -8,7 +8,7 @@ var stringifyJSON = function(obj) {
   if (typeof obj === 'number' || typeof obj === 'boolean') {
     return obj.toString();
   } else if (typeof obj === 'string') {
-    return '\'' + obj + '\'';
+    return '"' + obj + '"';
   } else if (obj === null) {
     return 'null';
   } else if (obj === undefined) {
@@ -27,7 +27,7 @@ var stringifyJSON = function(obj) {
     holder = [];
     for (var key in obj) {
       if (typeof obj[key] !== 'function' && typeof obj[key] !== undefined) {
-        holder.push('\'' + key + '\':' + stringifyJSON(obj[key]));
+        holder.push('"' + key + '":' + stringifyJSON(obj[key]));
       } else {
         return '{}';
       }
